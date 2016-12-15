@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Running Event</title>
+</head>
+<body>
+    {% include "MainSite/globalHeader.html" %}
+
+    <!-- TODO display this only when user is loged in -->
+    {% include "UserAccount/userAppHeader.html" %}
+
+    {% block body %} {% endblock %}
+
+    {% include "MainSite/globalFooter.html" %}
+</body>
+</html>

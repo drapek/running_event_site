@@ -13,15 +13,19 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url, include
+from django.conf.urls import url
 from django.contrib import admin
 from . import views
 
+app_name = 'userAccount'
+
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^$', views.IndexView, name='home'),
-    url(r'^event_description/', views.eventDescriptionView, name='eventDescription'),
-    url(r'^sponsors/', views.sponsorsView, name='sponsors'),
-    url(r'^userAccount/', include('UserAccount.urls')),
+    # all these url are prefixed by userAccount/ eg. mysite.com/userAccount/login
+    url(r'^$', views.IndexView, name='userHome'),
+    url(r'^login/', views.loginView, name='login'),
+    url(r'^register/', views.registerView, name='register'),
+    url(r'^myProfile/', views.profileDataView, name='userAccountData'),
+    url(r'^resultsTable/', views.resultsTableView, name='resultsTable'),
+    url(r'^photosFromEvent/', views.photosFromEventView, name='photosFromEvent'),
     url(r'', views.error404View, name='404exception'),  # remember that this url must be the last!
 ]

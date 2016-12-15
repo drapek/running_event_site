@@ -1,0 +1,12 @@
+{% block header %}
+<div id="global-header" style="color:blue">
+
+    <a href="{% url 'home' %}" class="headerButton"> Strona Główna </a>
+    <a href="{% url 'eventDescription' %}" class="headerButton"> Informacje o biegu </a>
+    <a href="{% url 'sponsors' %}" class="headerButton"> Sponsorzy </a>
+    <a href="{% url 'home' %}" class="headerButton"> Konto </a> <!-- TODO when user account will be done, change url to proper -->
+
+
+
+</div>
+{% endblock %}

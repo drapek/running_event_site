@@ -15,7 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from . import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^$', views.IndexView, name='home'),
+    url(r'^event_description/', views.eventDescriptionView, name='eventDescription'),
+    url(r'^sponsors/', views.sponsorsView, name='sponsors'),
+    # TODO Add urls of user account here
+    url(r'', views.error404View, name='404exception'),  # remember that this url must be the last!
 ]

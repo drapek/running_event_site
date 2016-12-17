@@ -3,4 +3,45 @@
 {% block body %}
 <h1> Zarejestruj się! </h1>
 
+<form method="post" action="{% url 'userAccount:login' %}">
+    {% csrf_token %}
+
+    <div class="form-row">
+        <label class="required" for="id_username">Nick:</label> <input autofocus="" id="id_username" maxlength="254" name="username" value="" required="" type="text">
+    </div>
+    <div class="form-row">
+        <label class="required" for="id_password">Hasło:</label> <input id="id_password" name="password" required="" type="password">
+    </div>
+     <div class="form-row">
+        <label class="required" for="id_password2">Powtórz hasło:</label> <input id="id_password2" name="password2" required="" type="password">
+    </div>
+    <div class="form-row">
+        <label class="required" for="id_name">Imię:</label> <input id="id_name" maxlength="254" name="name" value="" required="" type="text">
+    </div>
+    <div class="form-row">
+        <label class="required" for="id_surname">Nazwisko:</label> <input id="id_surname" maxlength="254" name="surname" value="" required="" type="text">
+    </div>
+    <div class="form-row">
+        Płeć:
+        <input id="id_sex_men"  name="sex" required="" type="radio" checked="checked"><label class="required" for="id_sex_men">Mężczyzna</label>
+        <input id="id_sex_women"  name="sex" required="" type="radio"><label class="required" for="id_sex_women">Kobieta</label>
+    </div>
+    <div class="form-row">
+        <label class="required" for="id_birthday">Data urodzenia:</label> <input id="id_birthday"  name="birthday" required="" type="date">
+    </div>
+    <div class="form-row">
+        <label class="required" for="id_email">email:</label> <input id="id_email" maxlength="254" name="email" value="" required="" type="text">
+    </div>
+    <div class="form-row">
+        <label class="not-required" for="id_telephone">Telefon:</label> <input id="id_telephone" maxlength="12" name="telephone" value="" type="text">
+    </div>
+    <div class="form-row">
+        <label class="not-required" for="id_team">Drużyna sporotowa:</label> <input id="id_team" maxlength="254" name="team" value="" type="text">
+    </div>
+
+
+    <div class="submit-row">
+    <label>&nbsp;</label><input value="Zarejestruj się" type="submit">
+    </div>
+</form>
 {% endblock %}

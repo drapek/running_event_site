@@ -8,9 +8,11 @@ def error404View(request):
     return render(request, 'MainSite/error404.html')
 
 def loginView(request):
+    # TODO add user login logic
     return render(request, 'UserAccount/login.html')
 
 def registerView(request):
+    # TODO add user register logic
     return render(request, 'UserAccount/register.html')
 
 def profileDataView(request):
@@ -21,3 +23,6 @@ def resultsTableView(request):
 
 def photosFromEventView(request):
     return HttpResponse("Redirection to photo service site")
+
+def password_resetView(request):
+    return render(request, 'UserAccount/password_reset.html')

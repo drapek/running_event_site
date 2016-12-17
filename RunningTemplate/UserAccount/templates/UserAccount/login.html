@@ -3,4 +3,39 @@
 {% block body %}
 <h1> Zaloguj się </h1>
 
+{% if form.errors %}
+<p>Błąd logowania. Podałeś błędne hasło bądź podany użytkownik nie istnieje. </p>
+{% endif %}
+
+{% if next %}
+    {% if user.is_authenticated %}
+    <p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+    {% else %}
+    <p>Please login to see this page.</p>
+    {% endif %}
+{% endif %}
+
+<form method="post" action="{% url 'userAccount:register' %}">
+    {% csrf_token %}
+
+    <div class="form-row">
+        <label class="required" for="id_username">Nick:</label> <input autofocus="" id="id_username" maxlength="254" name="username" value="" required="" type="text">
+    </div>
+    <div class="form-row">
+
+        <label class="required" for="id_password">Hasło:</label> <input id="id_password" name="password" required="" type="password">
+    </div>
+
+
+    <div class="submit-row">
+        <label>&nbsp;</label><a href="{% url 'userAccount:register' %}" >Zarejestruj się się </a> <label>&nbsp;</label><input value="Zaloguj się" type="submit">
+    </div>
+</form>
+
+{# Assumes you setup the password_reset view in your URLconf #}
+    {# TODO Add reset password functionality #}
+<p><a href="{% url 'userAccount:password_reset' %}">zapomniane hasło?</a></p>
+
+
 {% endblock %}

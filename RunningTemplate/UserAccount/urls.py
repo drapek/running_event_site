@@ -22,10 +22,11 @@ app_name = 'userAccount'
 urlpatterns = [
     # all these url are prefixed by userAccount/ eg. mysite.com/userAccount/login
     url(r'^$', views.IndexView, name='userHome'),
-    url(r'^login/', views.loginView, name='login'),
-    url(r'^register/', views.registerView, name='register'),
-    url(r'^myProfile/', views.profileDataView, name='userAccountData'),
-    url(r'^resultsTable/', views.resultsTableView, name='resultsTable'),
-    url(r'^photosFromEvent/', views.photosFromEventView, name='photosFromEvent'),
+    url(r'^login', views.loginView, name='login'),
+    url(r'^register', views.registerView, name='register'),
+    url(r'^myProfile', views.profileDataView, name='userAccountData'),
+    url(r'^resultsTable', views.resultsTableView, name='resultsTable'),
+    url(r'^photosFromEvent', views.photosFromEventView, name='photosFromEvent'),
+    url(r'^password_reset', views.password_resetView, name='password_reset'),
     url(r'', views.error404View, name='404exception'),  # remember that this url must be the last!
 ]

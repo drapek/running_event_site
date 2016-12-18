@@ -9,10 +9,18 @@ def error404View(request):
 
 def loginView(request):
     # TODO add user login logic
+
+    # TODO if is already logged in, redirect to account homepage
+
     return render(request, 'UserAccount/login.html')
 
 def registerView(request):
     # TODO add user register logic
+
+    # TODO if is already logged in, redirect to account homepage
+    # TODO check POST if there are values to register user, and try to register it
+    # TODO if POST is clear then show normal form
+
     return render(request, 'UserAccount/register.html')
 
 def profileDataView(request):

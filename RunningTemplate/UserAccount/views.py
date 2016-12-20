@@ -1,5 +1,8 @@
+#-*- coding: utf-8 -*-
 from django.http.response import HttpResponse
 from django.shortcuts import render
+from serverActions import userActions
+from exceptions.FormExceptions import InputError
 
 def IndexView(request):
     return render(request, 'UserAccount/index.html')
@@ -15,11 +18,25 @@ def loginView(request):
     return render(request, 'UserAccount/login.html')
 
 def registerView(request):
-    # TODO add user register logic
-
     # TODO if is already logged in, redirect to account homepage
-    # TODO check POST if there are values to register user, and try to register it
-    # TODO if POST is clear then show normal form
+
+    if not request.POST:
+        # if POST data is empty simply render only pure register form.
+        render(request, 'UserAccount/register.html')
+    else:
+        try:
+            userActions.createUser(request.POST)
+            return render(request, 'UserAccount/register.html', {'error_msg': error_msg})
+        except InputError as e:
+            error_msg = "Wystąpił błąd podczas przetwarzania danych"
+
+            if( e.msg == "not every required filed is set"):
+                error_msg = "Nie wszystkie wymagane pola zostały wypełnione!"
+
+            if (e.msg == "passwords are not equal!"):
+                error_msg = "Pola \'Hasło\' i \'Powtórz hasło\' się nie zgadzają!"
+
+            return render(request, 'UserAccount/register.html', {'error_msg': error_msg})
 
     return render(request, 'UserAccount/register.html')
 

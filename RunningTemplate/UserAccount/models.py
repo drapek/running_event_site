@@ -11,8 +11,8 @@ class NormalUser(models.Model):
     team_name = models.CharField(max_length=254, null=True)
     birth_date = models.DateField()
     sex = (
-        ('M', 'Men'),
-        ('W', 'Women')
+        ('m', 'men'),
+        ('w', 'women')
     )
     event_paid = models.BooleanField(default=False)
     event_photo_user_id = models.CharField(max_length=50)  # user id to external photo service

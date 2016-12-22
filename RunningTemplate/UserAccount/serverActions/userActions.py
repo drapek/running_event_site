@@ -12,18 +12,21 @@ def createUser(inputPersonalData):
     user.is_active = True  # TODO change it to false when email confirmation will be done
     user.first_name = dataContainer['name']
     user.last_name = dataContainer['surname']
+    user.save()
 
+    # TODO data don't want save into table with additonal info... FIX IT
     normalUserData = NormalUser
     normalUserData.birth_date = dataContainer['birthday']
     normalUserData.event_paid = False
     normalUserData.sex = dataContainer['sex']
     normalUserData.telephone = dataContainer['telephone']
 
-    normalUserData.user = user
+    normalUserData.is_valid()
+    normalUserData.save(NormalUser.objects)
 
 
-    normalUserData.save()  # TODO perhaps it coudn't work becasue we need to perform user.save() firstly
-    user.save()
+    #normalUserData.save(user)  # TODO perhaps it coudn't work becasue we need to perform user.save() firstly
+    #user.save()
 
 
 def __parseData(personDetails):

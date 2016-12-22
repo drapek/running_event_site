@@ -3,8 +3,8 @@
 {% block body %}
 <h1> Zaloguj się </h1>
 
-{% if form.errors %}
-<p>Błąd logowania. Podałeś błędne hasło bądź podany użytkownik nie istnieje. </p>
+{% if error_msg %}
+<p>{{ error_msg }} </p>
 {% endif %}
 
 {% if next %}

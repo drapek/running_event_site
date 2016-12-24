@@ -29,5 +29,6 @@ urlpatterns = [
     url(r'^resultsTable', views.resultsTableView, name='resultsTable'),
     url(r'^photosFromEvent', views.photosFromEventView, name='photosFromEvent'),
     url(r'^password_reset', views.password_resetView, name='password_reset'),
+    url(r'^logout', views.logout_action, name='logout'),
     url(r'', views.error404View, name='404exception'),  # remember that this url must be the last!
 ]

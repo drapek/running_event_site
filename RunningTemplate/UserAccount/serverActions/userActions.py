@@ -6,7 +6,6 @@ from ..exceptions.FormExceptions import InputError
 
 def createUser(inputPersonalData):
     dataContainer = __parseData(inputPersonalData)
-    # TODO catch exceptions -> it will throw eg. InregrityError because user of this username already exists!
 
     user = User.objects.create_user(username=dataContainer['username'], email=dataContainer['email'], password=dataContainer['password'])
     user.is_active = True  # TODO change it to false when email confirmation will be done
@@ -21,12 +20,7 @@ def createUser(inputPersonalData):
     normalUserData.sex = dataContainer['sex']
     normalUserData.telephone = dataContainer['telephone']
 
-    normalUserData.is_valid()
-    normalUserData.save(NormalUser.objects)
-
-
-    #normalUserData.save(user)  # TODO perhaps it coudn't work becasue we need to perform user.save() firstly
-    #user.save()
+    #normalUserData.save()  # TODO perhaps it coudn't work becasue we need to perform user.save() firstly
 
 
 def __parseData(personDetails):
@@ -59,11 +53,3 @@ def __parseData(personDetails):
 
     # TODO write another validations (for example for birthday -> maybe there are some libraries)
     return dataContainer
-
-
-
-def __checkIfAlreadyExist():
-    # TODO add logic here
-    # TODO search by column userName
-    pass
-

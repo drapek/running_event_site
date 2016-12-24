@@ -9,8 +9,12 @@
 
     {# references UserAccount app #}
     <div id="UserAccountLinks">
-        <a href="{% url 'userAccount:login' %}" class="headerButton"> Zaloguj </a>
-        <a href="{% url 'userAccount:register' %}" class="headerButton"> Zarejestruj się </a>
+        {% if user.is_authenticated %}
+            <a href="{% url 'userAccount:logout' %}" class="headerButton"> Wyloguj </a>
+        {% else %}
+            <a href="{% url 'userAccount:login' %}" class="headerButton"> Zaloguj </a>
+            <a href="{% url 'userAccount:register' %}" class="headerButton"> Zarejestruj się </a>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

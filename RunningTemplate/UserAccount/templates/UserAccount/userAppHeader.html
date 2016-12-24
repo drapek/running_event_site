@@ -1,6 +1,8 @@
+{% if user.is_authenticated %}
 <div id="userAppHeader">
     <a href="{% url 'userAccount:userHome' %}" class="userAppHeaderButton"> Strona główna użytkownika </a>
     <a href="{% url 'userAccount:userAccountData' %}" class="userAppHeaderButton">  Moje konto  </a>
     <a href="{% url 'userAccount:resultsTable' %}" class="userAppHeaderButton"> Tabela wyników </a> {# TODO this should be visible only after run event, for example when admin set run results #}
     <a href="{% url 'userAccount:photosFromEvent' %}" class="userAppHeaderButton"> Zdjęcia z biegu </a> {# TODO this should be visible only after run event, for example when admin set run results #}
 </div>
+{% endif %}

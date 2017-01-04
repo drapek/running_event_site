@@ -11,3 +11,4 @@ def eventDescriptionView(request):
 
 def sponsorsView(request):
     return render(request, 'MainSite/sponsors.html')
+

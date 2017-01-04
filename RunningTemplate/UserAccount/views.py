@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth import authenticate, login, logout
+from django.db import IntegrityError
 from django.http.response import HttpResponse
 from django.shortcuts import render, redirect
-from serverActions import userActions
+from forms import ImportRunResults
 from exceptions.FormExceptions import InputError
-from django.db import IntegrityError
-from django.contrib.auth import authenticate, login, logout
+from serverActions import userActions
 
 
-def IndexView(request):
+def indexView(request):
     loggedin_response = __redirect_if_not_logged_in(request)
     if loggedin_response:
         return loggedin_response
@@ -114,3 +116,48 @@ def __redirect_if_not_logged_in(request):
         return redirect('userAccount:login')
     else:
         False
+
+#################
+#  Admin views  #
+#################
+
+# TODO delete this if is not needed (unused code)
+# # TODO this views needs some adjusment to work ...
+# @staff_member_required
+# def formRunTableImportHandler(request):
+#     if request.method == "POST":
+#         form = SaveRunResultsIntoDB(request.POST, request.FILES)
+#         if form.is_valid():
+#             form.save()
+#             success = True
+#             context = {"form": form, "success": success}
+#             return render_to_response("imported.html", context,
+#                                       context_instance=RequestContext(request))
+#     else:
+#         form = SaveRunResultsIntoDB()
+#         context = {"form": form}import csv
+#         return render_to_response("imported.html", context,
+#                                   context_instance=RequestContext(request))
+
+
+@staff_member_required
+def runTableImport(request):
+    msg = ''  # message to display on rendered page
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = ImportRunResults(request.POST, request.FILES)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            form.save() # TODO add exceptions to this method and catch it there
+            # display message about success
+            return render(request, 'Admin/ImportRunTableFromCSV.html', {'form': form, 'message': 'Sukces!'})
+
+            # if a GET (or any other method) we'll create a blank form
+        else:
+            msg = 'Dane w formularzu nie są prawidłowe'
+    else:
+        form = ImportRunResults()
+
+    return render(request, 'Admin/ImportRunTableFromCSV.html', {'form': form, 'message': msg})
+

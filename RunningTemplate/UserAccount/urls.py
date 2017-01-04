@@ -22,7 +22,7 @@ app_name = 'userAccount'
 
 urlpatterns = [
     # all these url are prefixed by userAccount/ eg. mysite.com/userAccount/login
-    url(r'^$', views.IndexView, name='userHome'),
+    url(r'^$', views.indexView, name='userHome'),
     url(r'^login', views.loginView, name='login'),
     url(r'^register', views.registerView, name='register'),
     url(r'^myProfile', views.profileDataView, name='userAccountData'),

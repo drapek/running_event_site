@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*-
 from django.contrib import admin
-from django.contrib.auth.models import User
-from .models import NormalUser
+from django.utils.translation import ugettext_lazy as _
+from .models import NormalUser, RunResultsTable
+
 
 class NormalUserInline(admin.StackedInline):
     model = NormalUser
@@ -8,8 +10,11 @@ class NormalUserInline(admin.StackedInline):
 
 
 class UserAdmin(admin.ModelAdmin):
-    inlines = (NormalUserInline)
+    inlines = NormalUserInline
 
-#Re-register UserAdmin
-# admin.site.unregister(User)
-# admin.site.register(User, UserAdmin)
+
+@admin.register(RunResultsTable)
+class EditRunResults(admin.ModelAdmin):
+    pass  # TODO change headers and parameters name visible in admin panel
+
+

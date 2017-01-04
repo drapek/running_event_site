@@ -16,12 +16,13 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from . import views
-
+from UserAccount import views as userAccountViews
 urlpatterns = [
-    url(r'^admin', admin.site.urls),
     url(r'^$', views.IndexView, name='home'),
     url(r'^event_description', views.eventDescriptionView, name='eventDescription'),
     url(r'^sponsors', views.sponsorsView, name='sponsors'),
     url(r'^userAccount/', include('UserAccount.urls')),
+    url(r'^admin/importRunTable', userAccountViews.runTableImport, name='adminImportRunTable'),
+    url(r'^admin', admin.site.urls),
     url(r'', views.error404View, name='404exception'),  # remember that this url must be the last!
 ]

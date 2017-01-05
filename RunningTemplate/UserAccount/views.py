@@ -118,7 +118,7 @@ def __redirect_if_not_logged_in(request):
         False
 
 #################
-#  Admin views  #
+#  admin views  #
 #################
 
 @staff_member_required
@@ -134,7 +134,7 @@ def runTableImport(request):
             if( msg == ""):
                 msg = 'Sukces!'
             # display message about success
-            return render(request, 'Admin/ImportRunTableFromCSV.html', {'form': form, 'message': msg})
+            return render(request, 'admin/ImportRunTableFromCSV.html', {'form': form, 'message': msg})
 
             # if a GET (or any other method) we'll create a blank form
         else:
@@ -142,5 +142,5 @@ def runTableImport(request):
     else:
         form = ImportRunResults()
 
-    return render(request, 'Admin/ImportRunTableFromCSV.html', {'form': form, 'message': msg})
+    return render(request, 'admin/ImportRunTableFromCSV.html', {'form': form, 'message': msg})
 

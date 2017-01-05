@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -22,3 +23,16 @@ class RunResultsTable(models.Model):
     runner_id = models.ForeignKey(User)
     time_5km = models.FloatField('5km_time')
     time_overall = models.FloatField('10km_time')
+
+    class Meta(object):
+        verbose_name = "Wynik biegacza"
+        verbose_name_plural = "Wyniki biegu"
+
+    def user_first_name(self):
+        return self.runner_id.first_name
+
+    def user_last_name(self):
+        return self.runner_id.last_name
+
+    def user_id(self):
+        return  self.runner_id.id

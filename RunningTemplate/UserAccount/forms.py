@@ -19,15 +19,15 @@ class ImportRunResults(forms.Form):
             try:
                 user = User.objects.get(id=int(column[0]))
                 database_row_object.runner_id = user
-                database_row_object.time_5km = column[1]  # TODO converting to double can be needed (for this 2 lines of code)
+                database_row_object.time_5km = column[1]
                 database_row_object.time_overall = column[2]
                 database_row_object.save()
 
             except ObjectDoesNotExist as e:
-                error_log = error_log + "Użytkownik o id" + str(column[0]) + " nie istnieje w bazie użytkowników! Linia " + str(records.line_num) + " pliku CSV \n"
+                error_log = error_log + "Użytkownik o <b>id " + str(column[0]) + "</b> nie istnieje w bazie użytkowników! Linia " + str(records.line_num) + " pliku CSV. Pominięto dodanie jego wyniku.<br/>\n"
                 continue
             except Exception as e:
-                error_log = error_log + "Wystąpił nieoczekiwany błąd z id użytkownika. Linia " + str(records.line_num) + " pliku CSV\n"
+                error_log = error_log + "Wystąpił nieoczekiwany błąd z <b>id użytkownika. Linia " + str(records.line_num) + "</b> pliku CSV <br/>\n "
                 continue
 
-            return error_log
+        return error_log

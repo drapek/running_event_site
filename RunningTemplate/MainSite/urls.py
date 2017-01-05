@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^sponsors', views.sponsorsView, name='sponsors'),
     url(r'^userAccount/', include('UserAccount.urls')),
     url(r'^admin/importRunTable', userAccountViews.runTableImport, name='adminImportRunTable'),
+    url(r'^admin/', admin.site.urls),
     url(r'^admin', admin.site.urls),
     url(r'', views.error404View, name='404exception'),  # remember that this url must be the last!
 ]

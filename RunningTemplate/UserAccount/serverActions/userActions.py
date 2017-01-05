@@ -11,7 +11,7 @@ def createUser(inputPersonalData):
     user.is_active = True  # TODO change it to false when email confirmation will be done
     user.first_name = dataContainer['name']
     user.last_name = dataContainer['surname']
-    user.save()
+    user.save
 
     # TODO data don't want save into table with additonal info... FIX IT
     normalUserData = NormalUser

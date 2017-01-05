@@ -121,25 +121,6 @@ def __redirect_if_not_logged_in(request):
 #  Admin views  #
 #################
 
-# TODO delete this if is not needed (unused code)
-# # TODO this views needs some adjusment to work ...
-# @staff_member_required
-# def formRunTableImportHandler(request):
-#     if request.method == "POST":
-#         form = SaveRunResultsIntoDB(request.POST, request.FILES)
-#         if form.is_valid():
-#             form.save()
-#             success = True
-#             context = {"form": form, "success": success}
-#             return render_to_response("imported.html", context,
-#                                       context_instance=RequestContext(request))
-#     else:
-#         form = SaveRunResultsIntoDB()
-#         context = {"form": form}import csv
-#         return render_to_response("imported.html", context,
-#                                   context_instance=RequestContext(request))
-
-
 @staff_member_required
 def runTableImport(request):
     msg = ''  # message to display on rendered page
@@ -149,9 +130,11 @@ def runTableImport(request):
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
-            form.save() # TODO add exceptions to this method and catch it there
+            msg = form.save  # TODO add exceptions to this method and catch it there
+            if( msg == ""):
+                msg = 'Sukces!'
             # display message about success
-            return render(request, 'Admin/ImportRunTableFromCSV.html', {'form': form, 'message': 'Sukces!'})
+            return render(request, 'Admin/ImportRunTableFromCSV.html', {'form': form, 'message': msg})
 
             # if a GET (or any other method) we'll create a blank form
         else:

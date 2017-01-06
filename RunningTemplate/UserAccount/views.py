@@ -2,7 +2,6 @@
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from django.http.response import HttpResponse
 from django.shortcuts import render, redirect
 from forms import ImportRunResults
 from exceptions.FormExceptions import InputError
@@ -144,7 +143,7 @@ def resultsTableView(request):
                            'first_runner_position_on_page': (results.number - 1) * rows_per_page})
 
         user_position_in_database = None
-        #find position in qeurySet
+        #find position in qeurySet, needed to display page (divided by pagination)  which contains our user
         for index, item in enumerate(run_results_list):
             tmp = item.runner_id_id
             if item.runner_id_id == int(user_id):
@@ -155,7 +154,7 @@ def resultsTableView(request):
             error_msg = "Wynik użytkownika o numerze startowym " + str(user_id) + " nie istnieje w bazie."
             results = paginator.page(1)
         else:
-            page = (user_position_in_database / rows_per_page) + 1  # this gives page number where the user is
+            page = ((user_position_in_database - 1) / rows_per_page) + 1  # this gives page number where the user is
 
 
     else:

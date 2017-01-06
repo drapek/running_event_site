@@ -3,43 +3,57 @@
 {% block body %}
 <h1> Wyniki biegu </h1>
 
-{% if error_msg %}
-    <div class="error-msg">
-        {{ error_msg }}
-    </div>
-{% endif %}
+    {# it's check if there are results, if not it's showing a proper message not table #}
+    {% if results_table.object_list|length_is:"0" %}
+            <div id="no-result-table-info">
+                Wyniki biegu pojawią się do 24 godzin po zakończeniu imprezy biegowej. <br/>
+                Prosimy o cierpliwość i życzymy wysokich wyników.
 
-{% for result in results_table %}
-    {# Each "result" is a RunResultsTable model object. #}
-    {% if searched_user_id %}
-        {% if searched_user_id == result.user_id %}
-            #
+            </div>
+
+     {% else %}
+        {# display table with results #}
+        {% if error_msg %}
+            <div class="error-msg">
+                {{ error_msg }}
+            </div>
         {% endif %}
+
+
+
+        {% for result in results_table %}
+            {# Each "result" is a RunResultsTable model object. #}
+            {% if searched_user_id %}
+                {% if searched_user_id == result.user_id %}
+                    #
+                {% endif %}
+            {% endif %}
+            {{ forloop.counter | add:first_runner_position_on_page }}
+            {{ result.user_id }}
+            {{ result.runner_id }}
+            {{ result.user_first_name }}
+            {{ result.user_last_name }}
+            {{ result.time_5km }}
+            {{ result.time_overall }}
+
+            <br />
+        {% endfor %}
+
+        <div class="pagination">
+            <span class="step-links">
+                {% if results_table.has_previous %}
+                    <a href="?page={{ results_table.previous_page_number }}">poprzednia</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ results_table.number }} of {{ results_table.paginator.num_pages }}.
+                </span>
+
+                {% if results_table.has_next %}
+                    <a href="?page={{ results_table.next_page_number }}">następna</a>
+                {% endif %}
+            </span>
+        </div>
+
     {% endif %}
-    {{ forloop.counter | add:first_runner_position_on_page }}
-    {{ result.user_id }}
-    {{ result.runner_id }}
-    {{ result.user_first_name }}
-    {{ result.user_last_name }}
-    {{ result.time_5km }}
-    {{ result.time_overall }}
-
-    <br />
-{% endfor %}
-
-<div class="pagination">
-    <span class="step-links">
-        {% if results_table.has_previous %}
-            <a href="?page={{ results_table.previous_page_number }}">previous</a>
-        {% endif %}
-
-        <span class="current">
-            Page {{ results_table.number }} of {{ results_table.paginator.num_pages }}.
-        </span>
-
-        {% if results_table.has_next %}
-            <a href="?page={{ results_table.next_page_number }}">next</a>
-        {% endif %}
-    </span>
-</div>
 {% endblock %}

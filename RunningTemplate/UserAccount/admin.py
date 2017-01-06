@@ -17,9 +17,6 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(RunResultsTable)
 class EditRunResults(admin.ModelAdmin):
-    list_display = ('user_id', 'runner_id', 'user_first_name', 'user_last_name', 'time_5km', 'time_overall', 'foo_link')
-    readonly_fields = ('foo_link', )
+    list_display = ('user_id', 'runner_id', 'user_first_name', 'user_last_name', 'time_5km', 'time_overall')
 
-    def foo_link(self, obj):
-        return mark_safe('<a href="/blank">Full edit</a>')
 

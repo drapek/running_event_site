@@ -3,9 +3,19 @@
 {% block body %}
 <h1> Wyniki biegu </h1>
 
+{% if error_msg %}
+    <div class="error-msg">
+        {{ error_msg }}
+    </div>
+{% endif %}
+
 {% for result in results_table %}
     {# Each "result" is a RunResultsTable model object. #}
-
+    {% if searched_user_id %}
+        {% if searched_user_id == result.user_id %}
+            #
+        {% endif %}
+    {% endif %}
     {{ forloop.counter | add:first_runner_position_on_page }}
     {{ result.user_id }}
     {{ result.runner_id }}

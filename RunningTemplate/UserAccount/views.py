@@ -96,11 +96,41 @@ def resultsTableView(request):
         return loggedin_response
 
     run_results_list = RunResultsTable.objects.order_by('time_overall')
-
+    error_msg = None
     rows_per_page = 25
+    page = 1
+
     paginator = Paginator(run_results_list, rows_per_page)
 
-    page = request.GET.get('page')
+    # find page with user on it, if id_user is given as GET parameter
+    user_id = request.GET.get('user_id')
+    if user_id is not None:
+        try:
+            int_user_id = int(user_id)
+        except Exception:
+            error_msg = "Podany numer użytkownika jest błędny."
+            results = paginator.page(1)
+            return render(request, 'UserAccount/eventResultsTable.html',
+                          {'error_msg': error_msg, 'results_table': results,
+                           'first_runner_position_on_page': (results.number - 1) * rows_per_page})
+
+        user_position_in_database = None
+        #find position in qeurySet
+        for index, item in enumerate(run_results_list):
+            tmp = item.runner_id_id
+            if item.runner_id_id == int(user_id):
+                user_position_in_database = index + 1
+                break
+
+        if user_position_in_database is None:
+            error_msg = "Wynik użytkownika o numerze " + str(user_id) + " nie istnieje w bazie."
+            results = paginator.page(1)
+        else:
+            page = (user_position_in_database / rows_per_page) + 1  # this gives page number where the user is
+
+
+    else:
+        page = request.GET.get('page')
 
     try:
         results = paginator.page(page)
@@ -109,8 +139,8 @@ def resultsTableView(request):
     except EmptyPage:
         results = paginator.page(paginator.num_pages)
 
-    return render(request, 'UserAccount/eventResultsTable.html', {'results_table': results,
-                  'first_runner_position_on_page': (results.number - 1) * rows_per_page})
+    return render(request, 'UserAccount/eventResultsTable.html', {'error_msg': error_msg, 'results_table': results,
+                  'first_runner_position_on_page': (results.number - 1) * rows_per_page, 'searched_user_id': int_user_id})
 
 
 def photosFromEventView(request):

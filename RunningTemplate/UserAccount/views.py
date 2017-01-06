@@ -7,6 +7,8 @@ from django.shortcuts import render, redirect
 from forms import ImportRunResults
 from exceptions.FormExceptions import InputError
 from serverActions import userActions
+from .models import RunResultsTable
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def indexView(request):
@@ -92,7 +94,23 @@ def resultsTableView(request):
     loggedin_response = __redirect_if_not_logged_in(request)
     if loggedin_response:
         return loggedin_response
-    return render(request, 'UserAccount/eventResultsTable.html')
+
+    run_results_list = RunResultsTable.objects.order_by('time_overall')
+
+    rows_per_page = 25
+    paginator = Paginator(run_results_list, rows_per_page)
+
+    page = request.GET.get('page')
+
+    try:
+        results = paginator.page(page)
+    except PageNotAnInteger:
+        results = paginator.page(1)
+    except EmptyPage:
+        results = paginator.page(paginator.num_pages)
+
+    return render(request, 'UserAccount/eventResultsTable.html', {'results_table': results,
+                  'first_runner_position_on_page': (results.number - 1) * rows_per_page})
 
 
 def photosFromEventView(request):
@@ -130,7 +148,7 @@ def runTableImport(request):
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
-            msg = form.save  # TODO add exceptions to this method and catch it there
+            msg = form.save
             if( msg == ""):
                 msg = 'Sukces!'
             # display message about success

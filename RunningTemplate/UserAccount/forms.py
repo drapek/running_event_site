@@ -8,7 +8,6 @@ from django.core.exceptions import ObjectDoesNotExist
 class ImportRunResults(forms.Form):
     select_file_to_upload = forms.FileField(label='Wybierz plik')
 
-    # TODO this method isn't checked yet! So do this!
     @property
     def save(self):
         error_log = "" # tuple to store information about not

@@ -2,7 +2,34 @@
 
 {% block body %}
 <h1> Wyniki biegu </h1>
-<p>
-    tu jest tabela z wynikami (wystarczy użyć wyobraźni)
-</p>
+
+{% for result in results_table %}
+    {# Each "result" is a RunResultsTable model object. #}
+
+    {{ forloop.counter | add:first_runner_position_on_page }}
+    {{ result.user_id }}
+    {{ result.runner_id }}
+    {{ result.user_first_name }}
+    {{ result.user_last_name }}
+    {{ result.time_5km }}
+    {{ result.time_overall }}
+
+    <br />
+{% endfor %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if results_table.has_previous %}
+            <a href="?page={{ results_table.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ results_table.number }} of {{ results_table.paginator.num_pages }}.
+        </span>
+
+        {% if results_table.has_next %}
+            <a href="?page={{ results_table.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
 {% endblock %}

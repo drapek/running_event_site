@@ -1,18 +1,13 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
-from django.utils.translation import ugettext_lazy as _
-from django.utils.html import mark_safe
 from .models import NormalUser, RunResultsTable
-from django.contrib.auth.models import User
 
 
-class NormalUserInline(admin.StackedInline):
-    model = NormalUser
+@admin.register(NormalUser)
+class NormalUserInline(admin.ModelAdmin):
     can_delete = False
-
-
-class UserAdmin(admin.ModelAdmin):
-    inlines = NormalUserInline
+    list_display = ( 'user_id_', 'user_username', 'user_first_name', 'user_last_name', 'user_email', 'sex', 'team_name', 'birth_date', 'telephone', 'event_paid', 'user_is_active', 'event_photo_user_id')
+    search_fields = ['question_text']
 
 
 @admin.register(RunResultsTable)

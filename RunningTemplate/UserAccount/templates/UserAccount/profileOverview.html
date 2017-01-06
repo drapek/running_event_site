@@ -1,6 +1,83 @@
 {% extends "UserAccount/base.html" %}
 
 {% block body %}
-<h1> Edytuj swoje dane </h1>
+    <h1>
+        Informacje o koncie
+    </h1>
+    <div id="account-info">
+        <div id="payment-info">
+            <h2>Płatność</h2>
+            {% if userData.info__event_paid %}
+                Twoje konto zostało opłacone. Dziękujemy!
+            {% else %}
+                Proszę opłać swoje konto. <br/>
+                Koszt to 30 zł. <br/>
+                Bieg można opłacić w biurze organizatora biegu ul. Wolności 25 lokal 15 Warszawa, w godzinach 9:00 - 19:00 pn - pt,
+                lub wykonując przelew na konto 67 1234 5678 0000 0000 1234 5678, o tytule "Opłata Big Run {{ request.user.id }}".
+            {% endif %}
+        </div>
+        {% if request.user.id %}
+            <div id="info-run-photos">
+                <h2> Zdjęcia z biegu</h2>
+                <p>
+                    Zdjęcia możesz sprawdzić w serwisie FotoMaraton.pl
+                    link: <a href="http://www.fotomaraton.pl/event.php?Lang=PL&ToFind={{ request.user.id }}&Event=PKR16"> zdjęcia z biegu</a>
+                </p>
+            </div>
+        {% endif %}
+    </div>
 
+    <h1> Edytuj swoje dane </h1>
+    {% if message %}
+        <div id="update-data-msg">
+            {{ message }}
+        </div>
+    {% endif %}
+
+    <div id="update-user-data">
+        <form method="post" action="{% url 'userAccount:userAccountData' %}">
+            {% csrf_token %}
+
+            <div class="form-row">
+                <label class="required" for="id_username">Nick:</label> {{ userData.username }} <input type="hidden" value="{{ userData.username }}" id="id_username" name="username">
+            </div>
+            <div class="form-row">
+                <label class="not-required" for="id_password">Nowe hasło:</label> <input id="id_password" name="password" type="password">
+            </div>
+             <div class="form-row">
+                <label class="not-required" for="id_password2">Powtórz nowe hasło:</label> <input id="id_password2" name="password2" type="password">
+            </div>
+            <div class="form-row">
+                <label class="not-required" for="id_password">Stare hasło:</label> <input id="id_old_password" name="old_password" type="password">
+            </div>
+            <div class="form-row">
+                <label class="required" for="id_name">Imię:</label> <input id="id_name" maxlength="254" name="name" value="{{ userData.name }}" required="" type="text">
+            </div>
+            <div class="form-row">
+                <label class="required" for="id_surname">Nazwisko:</label> <input id="id_surname" maxlength="254" name="surname" value="{{ userData.surname }}" required="" type="text">
+            </div>
+            <div class="form-row">
+                Płeć:
+                <input id="id_sex_men"  name="sex" required="" type="radio" {% if userData.sex == 'men' %}checked="checked"{% endif %} value="men"><label class="required" for="id_sex_men">Mężczyzna</label>
+                <input id="id_sex_women"  name="sex" required="" type="radio" {% if userData.sex == 'women' %}checked="checked"{% endif %} value="women"><label class="required" for="id_sex_women">Kobieta</label>
+            </div>
+            <div class="form-row">
+                <label class="required" for="id_birthday">Data urodzenia (RRRR-MM-DD):</label> <input id="id_birthday"  value="{{ userData.birthday | date:'Y-m-d' }}" name="birthday" required="" type="date">
+            </div>
+            <div class="form-row">
+                <label class="required" for="id_email">email:</label> <input id="id_email" maxlength="254" name="email" value="{{ userData.email }}" required="" type="text">
+            </div>
+            <div class="form-row">
+                <label class="not-required" for="id_telephone">Telefon:</label> <input id="id_telephone" maxlength="12" name="telephone" value="{{ userData.telephone }}" type="text">
+            </div>
+            <div class="form-row">
+                <label class="not-required" for="id_team">Drużyna sporotowa:</label> <input id="id_team" maxlength="254" name="team" value="{{ userData.team }}" type="text">
+            </div>
+
+
+            <div class="submit-row">
+            <label>&nbsp;</label><input value="Edytuj dane" type="submit">
+            </div>
+        </form>
+    </div>
 {% endblock %}

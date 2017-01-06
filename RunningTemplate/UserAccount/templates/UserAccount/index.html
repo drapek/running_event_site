@@ -1,13 +1,13 @@
 {% extends "UserAccount/base.html" %}
 
 {% block body %}
-<h1> Witaj UserName! </h1>
-    <dev>
+<h1> Witaj {{ request.user.first_name }}! </h1>
+    <div>
         <p> Stan opłacenia konta </p>
-    </dev>
-    <dev>
+    </div>
+    <div>
         <p>
             Info o biegu / o wynikach
         </p>
-    </dev>
+    </div>
 {% endblock %}

@@ -2,7 +2,7 @@
 import csv
 from django import forms
 from django.contrib.auth.models import User
-from models import RunResultsTable
+from models import RunResultsTable, NormalUser
 from django.core.exceptions import ObjectDoesNotExist
 
 class ImportRunResults(forms.Form):
@@ -30,3 +30,4 @@ class ImportRunResults(forms.Form):
                 continue
 
         return error_log
+

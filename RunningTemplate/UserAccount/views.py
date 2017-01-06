@@ -87,7 +87,35 @@ def profileDataView(request):
     loggedin_response = __redirect_if_not_logged_in(request)
     if loggedin_response:
         return loggedin_response
-    return render(request, 'UserAccount/profileOverview.html')
+
+    msg = None
+    userData = userData = userActions.readUserData(user_id=request.user.id)
+
+    if not request.POST:
+        # if POST data is empty simply render only pure register form.
+        return render(request, 'UserAccount/profileOverview.html', {'message': msg, 'userData': userData})
+    else:
+        try:
+            userActions.updateUserData(request.POST)
+            userData = userActions.readUserData(user_id=request.user.id) # we must refresh data readed from database, because we have changed it
+            msg = "Twoje dane zostały pomyślnie zaktualizowane"
+        except InputError as e:
+            msg = "Wystąpił błąd podczas przetwarzania danych"
+
+            if (e.msg == "not every required filed is set"):
+                msg = "Nie wszystkie wymagane pola zostały wypełnione!"
+
+            if (e.msg == "passwords are not equal!"):
+                msg = "Pola \'Hasło\' i \'Powtórz hasło\' się nie zgadzają!"
+
+        except IntegrityError as e:
+            msg = "Błąd zapisu do bazy danych."
+
+        except Exception as e:
+            if __debug__:
+               msg = e.message
+
+    return render(request, 'UserAccount/profileOverview.html', {'message': msg, 'userData': userData})
 
 
 def resultsTableView(request):
@@ -99,6 +127,7 @@ def resultsTableView(request):
     error_msg = None
     rows_per_page = 25
     page = 1
+    int_user_id = None
 
     paginator = Paginator(run_results_list, rows_per_page)
 
@@ -123,7 +152,7 @@ def resultsTableView(request):
                 break
 
         if user_position_in_database is None:
-            error_msg = "Wynik użytkownika o numerze " + str(user_id) + " nie istnieje w bazie."
+            error_msg = "Wynik użytkownika o numerze startowym " + str(user_id) + " nie istnieje w bazie."
             results = paginator.page(1)
         else:
             page = (user_position_in_database / rows_per_page) + 1  # this gives page number where the user is
@@ -147,7 +176,9 @@ def photosFromEventView(request):
     loggedin_response = __redirect_if_not_logged_in(request)
     if loggedin_response:
         return loggedin_response
-    return HttpResponse("Redirection to photo service site")
+
+    personal_url_photo = "http://www.fotomaraton.pl/event.php?Lang=PL&ToFind=%s&Event=PKR16" % str(request.user.id)
+    return redirect(personal_url_photo)
 
 
 def password_resetView(request):

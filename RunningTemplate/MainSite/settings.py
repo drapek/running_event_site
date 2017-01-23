@@ -25,7 +25,7 @@ SECRET_KEY = 'o9hwq9kw^1&!)54+_kxudx8ue!f3v9zw#t^xs2w#5!kq@bf1*8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition
@@ -119,5 +119,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
+# when we have production server, we must run command collectstatic to grab all files from apps static folder, and put
+# it into one main static folder (its path is specified below)
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')

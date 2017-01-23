@@ -3,7 +3,15 @@
 {% block body %}
 <h1> Witaj {{ request.user.first_name }}! </h1>
     <div>
-        <p> Stan opłacenia konta </p>
+        <div id="payment-info">
+            <h1>Stan opłacenia konta</h1>
+            {% if userData.info__event_paid %}
+                Twoje konto zostało opłacone. Dziękujemy!
+            {% else %}
+                Proszę opłać swoje konto. <br/>
+                Szczegóły opłaty znajdziesz w zakładce moje konto.
+            {% endif %}
+        </div>
     </div>
     <div>
         <p>

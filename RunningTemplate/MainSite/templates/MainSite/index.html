@@ -2,10 +2,45 @@
 
 {% block body %}
 <h1> Witaj na stronie głównej Event Run'u!</h1>
-    <dev>
-        Slider ze zdjęiami
-    </dev>
-    <dev>
-        News Feed
-    </dev>
+    <div>
+            <img class="mySlides" src="https://i.ytimg.com/vi/qNO2gVuqGdk/maxresdefault.jpg">
+            <img class="mySlides" src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/70859d8278681.560ba5a0184fe.jpg">
+        <a class="w3-btn-floating w3-display-left" onclick="plusDivs(-1)">&#10094;</a>
+        <a class="w3-btn-floating w3-display-right" onclick="plusDivs(+1)">&#10095;</a>
+    </div>
+    <h2> Bieg odbędzie się 3.04.2017! Więc nie czekaj i zarejestruj się już dziś!</h2>
+    <div>
+        <h2>Aktualności</h2>
+    <ul>
+        <li>
+            Pozostało już tylko 40 miejsc!
+        </li>
+        <li>
+            Jak się przygotować do biegu?
+        </li>
+    </ul>
+    </div>
+
+
+
+    <script> /* SCRIPT FOR PHOTO SLIDER */
+    var slideIndex = 1;
+showDivs(slideIndex);
+
+function plusDivs(n) {
+    showDivs(slideIndex += n);
+}
+
+function showDivs(n) {
+    var i;
+    var x = document.getElementsByClassName("mySlides");
+    if (n > x.length) {slideIndex = 1}
+    if (n < 1) {slideIndex = x.length} ;
+    for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+    }
+    x[slideIndex-1].style.display = "block";
+}
+    </script>
 {% endblock %}
+

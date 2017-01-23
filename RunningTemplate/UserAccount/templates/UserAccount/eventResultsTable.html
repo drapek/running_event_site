@@ -17,27 +17,39 @@
             <div class="error-msg">
                 {{ error_msg }}
             </div>
+
         {% endif %}
 
 
+        <table id="result-table">
+            <tr>
+                <th> Miejsce </th>
+                <th> id biegacza</th>
+                <th> nick </th>
+                <th> Imię </th>
+                <th> Nazwisko </th>
+                <th> Czas po 5 km</th>
+                <th> Czas po 10 km</th>
+            </tr>
+            {% for result in results_table %}
+                {# Each "result" is a RunResultsTable model object. #}
 
-        {% for result in results_table %}
-            {# Each "result" is a RunResultsTable model object. #}
-            {% if searched_user_id %}
-                {% if searched_user_id == result.user_id %}
-                    #
-                {% endif %}
-            {% endif %}
-            {{ forloop.counter | add:first_runner_position_on_page }}
-            {{ result.user_id }}
-            {{ result.runner_id }}
-            {{ result.user_first_name }}
-            {{ result.user_last_name }}
-            {{ result.time_5km }}
-            {{ result.time_overall }}
+                <tr class="table-row {% if searched_user_id %}
+                    {% if searched_user_id == result.user_id %}
+                        markered-row
+                    {% endif %}
+                {% endif %} ">
+                    <td>{{ forloop.counter | add:first_runner_position_on_page }}</td>
+                    <td>{{ result.user_id }}</td>
+                    <td>{{ result.runner_id }}</td>
+                    <td>{{ result.user_first_name }}</td>
+                    <td>{{ result.user_last_name }}</td>
+                    <td>{{ result.time_5km }}</td>
+                    <td>{{ result.time_overall }}</td>
+                 </tr>
+            {% endfor %}
 
-            <br />
-        {% endfor %}
+        </table>
 
         <div class="pagination">
             <span class="step-links">
@@ -46,7 +58,7 @@
                 {% endif %}
 
                 <span class="current">
-                    Page {{ results_table.number }} of {{ results_table.paginator.num_pages }}.
+                    Strona {{ results_table.number }} z {{ results_table.paginator.num_pages }}.
                 </span>
 
                 {% if results_table.has_next %}
